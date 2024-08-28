@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -5,41 +7,89 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/models.dart';
 import 'package:flutter_application_1/path/api_path.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Auth {
   final _auth = FirebaseAuth.instance;
   final _database = FirebaseFirestore.instance;
-  Future<bool> signup({required String email, required String password}) async {
+  Future<bool> Submit(
+      {required bool Loggedin,
+      required String email,
+      required String password}) async {
     bool response = false;
     if (email.isNotEmpty || password.isNotEmpty) {
-      UserCredential cerd = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      // {"email": email, "password": password, "id": cerd.user?.uid}
+      if (Loggedin) {
+        UserCredential user = await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
+        response = true;
+        print("LOG IN METHOD IS SUCCESS :  ${user.user?.displayName}");
+      } else {
+        UserCredential cerd = await _auth.createUserWithEmailAndPassword(
+            email: email, password: password);
 
-      //  final user=myUser(userId: cerd.user?.uid , account: account, name: name, location: location)
-      _database
-          .collection(ApiPath.Users())
-          .doc(cerd.user?.uid)
-          .set({"email": email, "password": password, "id": cerd.user?.uid});
-      response = true;
+        _database.collection(ApiPath.Users()).doc(cerd.user?.uid).set({
+          "email": email,
+          "password": password,
+          "id": cerd.user?.uid,
+        });
+        response = true;
+      }
     } else {
       response = false;
     }
+
     return response;
   }
 
-  Future<bool> Login({required String email, required String password}) async {
+  Future<bool?> LoginWithGoogle() async {
     bool response = false;
-    if (email.isNotEmpty || password.isNotEmpty) {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
-      response = true;
-    } else {
+    try {
+      final googleUser = await GoogleSignIn().signIn();
+      final googleAuth = await googleUser?.authentication;
+      final cred = GoogleAuthProvider.credential(
+        idToken: googleAuth?.idToken,
+        accessToken: googleAuth?.accessToken,
+      );
+      final UserCredential userCred = await _auth.signInWithCredential(cred);
+      if (userCred.user != null) {
+        print("SIGH IN METHOD IS SUCCESS :  ${userCred.user?.displayName}");
+        response = true;
+      } else {
+        print("SIGN IN METHOD ID FAILD : NO USER INFORAMEİON AVALİABLE ");
+        response = false;
+      }
+    } catch (e) {
+      print(e.toString());
       response = false;
+
+      return response;
     }
-    return response;
+  }
+
+  String getCurrentUserEmail() {
+    return _auth.currentUser?.email as String ?? "Unknown User";
+  }
+
+  String getCurrentUserID() {
+    return _auth.currentUser?.uid as String;
   }
 
   String getCurrentUserName() {
-    return _auth.currentUser?.email as String;
+    return _database.collection(ApiPath.Users()).doc(getCurrentUserID()).get()
+        as String;
+  }
+
+  void Logout() async {
+    return await _auth.signOut();
+  }
+
+  Future EditUser({required name, required location}) async {
+    return await _database
+        .collection(ApiPath.Users())
+        .doc(getCurrentUserID())
+        .update({
+      "name": name,
+      "location": location,
+    });
   }
 }

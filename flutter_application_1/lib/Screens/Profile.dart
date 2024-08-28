@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/constants.dart';
+import 'package:flutter_application_1/main.dart';
+import 'package:flutter_application_1/services/authentication.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:ffi';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -112,27 +113,40 @@ class _ProfileState extends State<Profile> {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top: 150, left: 30),
+          margin: EdgeInsets.only(top: 250, left: 30),
           width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Icon(
-                Icons.logout,
-                size: 35,
-                color: pinkColor,
+          child: GestureDetector(
+            onTap: () {
+              Auth().Logout();
+            },
+            child: GestureDetector(
+              onTap: () {
+                Auth().Logout();
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => MyApp(),
+                ));
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.logout,
+                    size: 30,
+                    color: pinkColor,
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    "Logout",
+                    style: GoogleFonts.poppins(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: pinkColor),
+                  ),
+                ],
               ),
-              SizedBox(
-                width: 20,
-              ),
-              Text(
-                "Logout",
-                style: GoogleFonts.poppins(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: pinkColor),
-              ),
-            ],
+            ),
           ),
         )
       ],

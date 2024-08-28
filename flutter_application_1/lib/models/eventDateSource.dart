@@ -5,7 +5,7 @@ class EventDatasource extends CalendarDataSource {
   EventDatasource(List<Event> appointments) {
     this.appointments = appointments;
   }
-  Event getEvent(int index) => appointments![index];
+  Event getEvent(int index) => appointments![index] as Event;
 
   @override
   DateTime getStartTime(int index) {
@@ -24,9 +24,9 @@ class EventDatasource extends CalendarDataSource {
     return getEvent(index).title;
   }
 
-  @override
-  String? getNotes(int index) {
-    // TODO: implement getNotes
-    return getEvent(index).description;
-  }
+  // @override
+  // String? getNotes(int index) {
+  //   // TODO: implement getNotes
+  //   return getEvent(index).description;
+  // }
 }

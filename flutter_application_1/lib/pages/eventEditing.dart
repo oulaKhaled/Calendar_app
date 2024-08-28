@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:ffi';
+
 import 'package:flutter_application_1/constants.dart';
 import 'package:flutter_application_1/controllers/event_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -50,10 +50,15 @@ class _EventEditState extends State<EventEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(
-          Icons.close_outlined,
-          size: 35,
-          color: Colors.black,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.close_outlined,
+            size: 35,
+            color: Colors.black,
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -97,6 +102,7 @@ class _EventEditState extends State<EventEdit> {
                   contentPadding: EdgeInsets.all(20),
                   filled: true,
                   fillColor: Colors.grey[300],
+
                   hintText: 'title',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(7.0),
@@ -120,13 +126,8 @@ class _EventEditState extends State<EventEdit> {
                   keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
                     isDense: true,
-                    // contentPadding: EdgeInsets.only(left: 10),
-
-                    // Added this
-
                     filled: true,
                     fillColor: Colors.grey[300],
-
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(7.0),
                       borderSide: BorderSide.none,
@@ -141,7 +142,10 @@ class _EventEditState extends State<EventEdit> {
                 height: 40,
                 width: 150,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    EventController().AddEventController(fromDate, toDate,
+                        _descriptioncontroller.text, _titleController.text);
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12), // <-- Radius

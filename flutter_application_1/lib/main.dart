@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
-import 'dart:ffi';
+
 import 'package:flutter_application_1/constants.dart';
-import 'package:flutter_application_1/nav_bar.dart';
+
 import 'package:flutter_application_1/pages/signup.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'pages/Login.dart';

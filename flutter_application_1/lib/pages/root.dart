@@ -3,9 +3,8 @@ import 'package:flutter_application_1/Screens/Profile.dart';
 import 'package:flutter_application_1/Screens/calendar.dart';
 import 'package:flutter_application_1/Screens/clock.dart';
 import 'package:flutter_application_1/Screens/home.dart';
-import 'package:flutter_application_1/nav_bar.dart';
+
 import 'package:flutter_application_1/constants.dart';
-import 'dart:ffi';
 
 int mynumber = 1;
 
@@ -19,7 +18,7 @@ class Root extends StatefulWidget {
 class _RootState extends State<Root> {
   @override
   final Screens = [Home(), Calendar(), Clock(), Profile()];
-
+  int number = 0;
   Widget build(BuildContext context) {
     return Scaffold(
         body: Screens[number],
@@ -78,12 +77,12 @@ class _RootState extends State<Root> {
                         });
                       },
                       icon: Icon(
-                        Icons.watch_later_outlined,
+                        Icons.calendar_month,
                         size: 35,
                         color: number == 2 ? pinkColor : greyColor,
                       ),
                     ),
-                    Text("Clock")
+                    Text("test")
                   ],
                 ),
               ),

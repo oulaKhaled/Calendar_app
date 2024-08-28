@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_application_1/pages/Login.dart';
 import 'package:flutter_application_1/pages/root.dart';
 import 'package:flutter_application_1/services/authentication.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constants.dart';
+import 'setProfile.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -16,6 +18,20 @@ class _SignUpState extends State<SignUp> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final _auth = Auth();
+
+  void SignUpUser() async {
+    bool response = (await _auth.Submit(
+      email: emailController.text,
+      password: passwordController.text,
+      Loggedin: false,
+    )) as bool;
+    if (response) {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => Setprofile(),
+      ));
+    } else {}
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -24,45 +40,31 @@ class _SignUpState extends State<SignUp> {
     super.dispose();
   }
 
-  void SignUpUser() async {
-    bool response = (await _auth.signup(
-        email: emailController.text,
-        password: passwordController.text)) as bool;
-    if (response) {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => Root(),
-      ));
-    } else {}
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(),
       body: Container(
         margin: EdgeInsets.only(right: 20, left: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 10,
+            Text(
+              "Join Us Today !",
+              style: GoogleFonts.poppins(
+                  color: Colors.black,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold),
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: 40, top: 20),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  size: 40,
-                ),
-              ),
+            SizedBox(
+              height: 20,
             ),
             Text(
               "Enter Email Address ",
               style: GoogleFonts.poppins(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.w700),
             ),
             SizedBox(
@@ -96,6 +98,7 @@ class _SignUpState extends State<SignUp> {
             ),
             Container(
               child: TextField(
+                  obscureText: true,
                   controller: passwordController,
                   decoration: InputDecoration(
                     isDense: true, // Added this
@@ -126,77 +129,8 @@ class _SignUpState extends State<SignUp> {
                   child: Text("Signup",
                       style: TextStyle(color: Colors.white, fontSize: 15))),
             ),
-            SizedBox(
-              height: 30,
-            ),
-            Center(
-              child: Text(
-                "OR",
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.w700),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                    height: 80,
-                    width: 80,
-                    child: ElevatedButton(
-                      child: Container(
-                        child: Image.asset(
-                          "assets/google_logo2.png",
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          // <-- Radius
-                        ),
-                        side: BorderSide(
-                          width: 2,
-                          color: pinkColor,
-                        ),
-                      ),
-                      onPressed: () {},
-                    )),
-                SizedBox(
-                  width: 20,
-                ),
-                SizedBox(
-                  height: 80,
-                  width: 80,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12), // <-- Radius
-                        ),
-                        side: BorderSide(
-                          width: 2,
-                          color: pinkColor,
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: Container(
-                        child: Image.asset(
-                          "assets/facebook_logo2.png",
-                          width: 70,
-                          height: 70,
-                        ),
-                      )),
-                ),
-              ],
-            ),
             Container(
-              margin: EdgeInsets.only(top: 70),
+              margin: EdgeInsets.only(top: 300),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

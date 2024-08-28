@@ -41,6 +41,9 @@ dependencies:
   cloud_firestore: ^4.14.0
   syncfusion_flutter_calendar: ^26.2.10
   random_string: ^2.3.1
+  google_sign_in: ^6.2.1
+  facebook_auth: ^0.0.3
+  flutter_facebook_auth: ^7.0.1
 
 dev_dependencies:
   flutter_test:
