@@ -41,90 +41,80 @@ class _CalendarState extends State<Calendar> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      floatingActionButton: SizedBox(
-        width: 40,
-        height: 40,
-        child: FloatingActionButton(
-            backgroundColor: Colors.white,
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EventEdit()));
-            },
-            child: Stack(
-              children: [
-                Icon(
-                  Icons.calendar_today,
-                  size: 35,
-                  color: pinkColor,
-                ),
-                Positioned(
-                    left: 18,
-                    top: 20,
-                    child: Icon(
-                      Icons.add_circle,
-                      size: 15,
-                      color: pinkColor,
-                    ))
-              ],
-            )),
-      ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        child: Column(
-          children: [
-            Container(
-              height: 700,
-              margin: EdgeInsets.all(12),
-              width: double.infinity,
-              child: FutureBuilder<List<Event>>(
-                  future: _data(),
-                  builder: (context, AsyncSnapshot snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text("Error: ${snapshot.error}");
-                    } else {
-                      return Column(
-                        children: [
-                          // Text("This is DATA ${snapshot.data}"),
-                          Container(
-                            height: 600,
-                            margin: const EdgeInsets.all(12),
-                            width: double.infinity,
-                            child: SfCalendar(
-                              monthViewSettings: MonthViewSettings(),
-                              headerHeight: 60,
-                              headerStyle: CalendarHeaderStyle(
-                                  textStyle: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 25,
-                                      color: Colors.black)),
-                              todayHighlightColor: pinkColor?.withOpacity(0.3),
-                              selectionDecoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: pinkColor, width: 3)),
-                              todayTextStyle: GoogleFonts.poppins(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                              view: CalendarView.month,
-                              dataSource: EventDatasource(snapshot.data),
-                              initialSelectedDate: DateTime.now(),
-                              onTap: (details) => {
-                                setDate(details.date!),
-                                showModalBottomSheet(
-                                    context: context,
-                                    builder: (context) => TaskWidget())
-                              },
-                            ),
-                          ),
-                        ],
-                      );
-                    }
-                  }),
+        margin: EdgeInsets.all(10),
+        child: Column(children: [
+          Container(
+              // height: double.infinity,
+              // width: double.infinity,
+
+              child: Column(children: [
+            SizedBox(
+              height: 30,
             ),
-          ],
-        ),
+            FutureBuilder(
+                future: _data(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  return Container(
+                      height: 500,
+                      // decoration: BoxDecoration(
+                      //     border:
+                      //         Border.all(color: Colors.black, width: 3),
+                      //     borderRadius: BorderRadius.circular(15)),
+
+                      width: double.infinity,
+                      child: SfCalendar(
+                        monthViewSettings: MonthViewSettings(
+                            monthCellStyle: MonthCellStyle(
+                          textStyle: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15),
+                        )),
+                        headerHeight: 60,
+                        headerStyle: CalendarHeaderStyle(
+                            textStyle: GoogleFonts.poppins(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25,
+                                color: Colors.black)),
+                        todayHighlightColor: pinkColor?.withOpacity(0.3),
+                        selectionDecoration: BoxDecoration(
+                            border: Border.all(color: pinkColor, width: 3)),
+                        todayTextStyle: GoogleFonts.poppins(
+                            color: Colors.black, fontWeight: FontWeight.bold),
+                        view: CalendarView.month,
+                        dataSource: EventDatasource(snapshot.data),
+                        initialSelectedDate: DateTime.now(),
+                        onTap: (details) => {
+                          setDate(details.date!),
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (context) => TaskWidget())
+                        },
+                      ));
+                }),
+            Container(
+              width: double.infinity,
+              height: 60,
+              margin: EdgeInsets.only(left: 10, right: 10, top: 150),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: pinkColor,
+                ),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => EventEdit()));
+                },
+                child: Text(
+                  "Add new events",
+                  style: GoogleFonts.poppins(color: Colors.white, fontSize: 20),
+                ),
+              ),
+            )
+          ]))
+        ]),
       ),
     );
   }
@@ -263,17 +253,6 @@ Widget appoitmentBuilder(
     ),
   );
 }
-
-
-
-
-
-
-
-
-
-
-
 
 // class CalendarWidget extends StatefulWidget {
 //   const CalendarWidget({super.key});

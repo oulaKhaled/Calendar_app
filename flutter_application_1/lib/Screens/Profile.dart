@@ -12,7 +12,20 @@ class Profile extends StatefulWidget {
   State<Profile> createState() => _ProfileState();
 }
 
+Future _getUserInfo() async {
+  final data = await Auth().getCurrentUserInfo();
+  print("THİS İS UUUUSERRR IFNFFOOORMMATİOON : ${data["name"]}");
+  return data;
+}
+
 class _ProfileState extends State<Profile> {
+  @override
+  void initState() {
+    _getUserInfo();
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -33,34 +46,39 @@ class _ProfileState extends State<Profile> {
                         child: CircleAvatar(
                             radius: 60,
                             backgroundImage: NetworkImage(
-                              'https://images.pexels.com/photos/3680219/pexels-photo-3680219.jpeg',
+                              'https://static.vecteezy.com/system/resources/previews/009/292/244/original/default-avatar-icon-of-social-media-user-vector.jpg',
                             )),
                       ),
                     ),
                     SizedBox(
                       width: 10,
                     ),
-                    Column(
-                      children: [
-                        Text(
-                          "Hi,Valentine",
-                          style: GoogleFonts.poppins(
-                              fontSize: 15, fontWeight: FontWeight.bold),
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                    FutureBuilder(
+                      future: _getUserInfo(),
+                      builder: (context, snapshot) {
+                        return Column(
                           children: [
-                            Icon(
-                              Icons.location_on,
-                              size: 20,
-                            ),
                             Text(
-                              "Boston",
-                              style: GoogleFonts.poppins(fontSize: 12),
+                              "Hi,${snapshot.data["name"]}",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
                             ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.location_on,
+                                  size: 20,
+                                ),
+                                Text(
+                                  "${snapshot.data["location"]}",
+                                  style: GoogleFonts.poppins(fontSize: 15),
+                                ),
+                              ],
+                            )
                           ],
-                        )
-                      ],
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -86,27 +104,33 @@ class _ProfileState extends State<Profile> {
                         padding: EdgeInsets.only(right: 20),
                         child: Text("Manage",
                             style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.bold)),
+                                fontWeight: FontWeight.bold, color: pinkColor)),
                       ),
                     ],
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 30, left: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("google Account",
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.bold)),
-                        Text("Facebook Account",
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.bold)),
-                        Text("outlook Account",
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                  )
+                  FutureBuilder(
+                      future: _getUserInfo(),
+                      builder: (context, snapshot) {
+                        return Container(
+                          margin: EdgeInsets.only(top: 30, left: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.email_sharp),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text("${snapshot.data["email"]}",
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.bold)),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      })
                 ],
               )
             ],

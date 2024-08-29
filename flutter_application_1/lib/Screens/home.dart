@@ -6,11 +6,27 @@ import 'package:flutter_application_1/services/authentication.dart';
 import 'package:flutter_application_1/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
 
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   Future<List<Event>> _data() async {
     return await EventController().GetEventsController();
+  }
+
+  Future _userName() async {
+    return await Auth().getCurrentUserInfo();
+  }
+
+  @override
+  void initState() {
+    _data();
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
@@ -38,21 +54,35 @@ class Home extends StatelessWidget {
                     ],
                   ),
                 ),
-                Text(
-                  "Hello, ",
-                  style: GoogleFonts.poppins(
-                      fontSize: 30, fontWeight: FontWeight.w600),
+                FutureBuilder(
+                  future: _userName(),
+                  builder: (context, snapshots) {
+                    return Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Hello, ${snapshots.data["name"]}",
+                            style: GoogleFonts.poppins(
+                                fontSize: 30, fontWeight: FontWeight.w600),
+                          ),
+                          Row(
+                            children: [
+                              Icon(Icons.location_on),
+                              Text("${snapshots.data["location"]}",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500)),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
-                Row(
-                  children: [
-                    Text("Boston",
-                        style: GoogleFonts.poppins(
-                            fontSize: 20, fontWeight: FontWeight.w500)),
-                    Icon(Icons.location_on)
-                  ],
-                ),
+
                 SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 Container(
                     margin: EdgeInsets.all(10),
@@ -71,6 +101,9 @@ class Home extends StatelessWidget {
                             fontSize: 24),
                       ),
                     )),
+                SizedBox(
+                  height: 10,
+                ),
                 Text(
                   "Upcoming Events",
                   style: GoogleFonts.poppins(
@@ -81,6 +114,9 @@ class Home extends StatelessWidget {
                         color: greyColor,
                         fontSize: 15,
                         fontWeight: FontWeight.w500)),
+                SizedBox(
+                  height: 10,
+                ),
                 Center(
                   child: Stack(
                     children: [
@@ -91,12 +127,12 @@ class Home extends StatelessWidget {
                                 // Use Column, ListView, or another widget to display the list of widgets
                                 children: snapshot.data!.map((event) {
                               return Container(
-                                  margin: EdgeInsets.all(20),
+                                  margin: EdgeInsets.all(15),
                                   width: double.infinity,
-                                  height: 200,
+                                  height: 150,
                                   decoration: BoxDecoration(
                                       // color: Color.fromARGB(255, 250, 197, 216),
-                                      color: Color.fromARGB(255, 205, 221, 253),
+                                      color: Color.fromARGB(255, 228, 235, 250),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Container(
                                     margin: EdgeInsets.all(10),
@@ -125,19 +161,20 @@ class Home extends StatelessWidget {
                                           height: 10,
                                         ),
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
                                           children: [
                                             Icon(
                                               Icons.date_range,
-                                              size: 30,
+                                              size: 20,
+                                            ),
+                                            SizedBox(
+                                              width: 10,
                                             ),
                                             Text(
                                               Utils.toDateTime(event.to),
                                               style: GoogleFonts.poppins(
                                                   color: greyColor,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20),
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 15),
                                             ),
                                           ],
                                         ),
@@ -145,19 +182,20 @@ class Home extends StatelessWidget {
                                           height: 10,
                                         ),
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
                                           children: [
                                             Icon(
                                               Icons.date_range,
-                                              size: 30,
+                                              size: 20,
+                                            ),
+                                            SizedBox(
+                                              width: 10,
                                             ),
                                             Text(
                                               Utils.toDateTime(event.from),
                                               style: GoogleFonts.poppins(
                                                   color: greyColor,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20),
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 15),
                                             ),
                                           ],
                                         )

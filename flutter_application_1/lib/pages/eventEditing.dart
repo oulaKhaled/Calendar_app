@@ -49,118 +49,128 @@ class _EventEditState extends State<EventEdit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.close_outlined,
-            size: 35,
-            color: Colors.black,
+      body: Column(
+        children: [
+          SizedBox(
+            height: 100,
           ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.only(left: 20, right: 20),
-        child: Form(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Stack(
-              //   alignment: Alignment.bottomCenter,
-              //   children: [
-              //     Container(
-              //       width: 50,
-              //       height: 50,
-              //       decoration:
-              //           BoxDecoration(color: pinkColor, shape: BoxShape.circle),
-              //     ),
-              //     Positioned(
-              //       right: 7,
-              //       top: 7,
-              //       child: Icon(
-              //         Icons.close_outlined,
-              //         size: 35,
-              //         color: Colors.white,
-              //       ),
-              //     )
-              //   ],
-              // ),
-              Text(
-                "Title",
-                style: GoogleFonts.poppins(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700),
-              ),
-              TextField(
-                controller: _titleController,
-                decoration: InputDecoration(
-                  isDense: true, // Added this
-                  contentPadding: EdgeInsets.all(20),
-                  filled: true,
-                  fillColor: Colors.grey[300],
+          SingleChildScrollView(
+            padding: EdgeInsets.only(left: 20, right: 20),
+            child: Form(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Title",
+                    style: GoogleFonts.poppins(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700),
+                  ),
+                  TextField(
+                    controller: _titleController,
+                    decoration: InputDecoration(
+                      isDense: true, // Added this
+                      contentPadding: EdgeInsets.all(20),
+                      filled: true,
+                      fillColor: Colors.grey[200],
 
-                  hintText: 'title',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(7.0),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              buildDate(),
-              Text("Description"),
-              SizedBox(
-                height: 150,
-                width: double.infinity,
-                child: TextField(
-                  expands: true,
-                  minLines: null,
-                  maxLines: null,
-                  controller: _descriptioncontroller,
-                  keyboardType: TextInputType.multiline,
-                  decoration: InputDecoration(
-                    isDense: true,
-                    filled: true,
-                    fillColor: Colors.grey[300],
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(7.0),
-                      borderSide: BorderSide.none,
+                      hintText: 'title',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(7.0),
+                        borderSide: BorderSide.none,
+                      ),
                     ),
                   ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                height: 40,
-                width: 150,
-                child: ElevatedButton(
-                  onPressed: () {
-                    EventController().AddEventController(fromDate, toDate,
-                        _descriptioncontroller.text, _titleController.text);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12), // <-- Radius
+                  SizedBox(
+                    height: 40,
+                  ),
+                  buildDate(),
+                  Text("Description"),
+                  SizedBox(
+                    height: 150,
+                    width: double.infinity,
+                    child: TextField(
+                      expands: true,
+                      minLines: null,
+                      maxLines: null,
+                      controller: _descriptioncontroller,
+                      keyboardType: TextInputType.multiline,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
                     ),
-                    backgroundColor: pinkColor,
                   ),
-                  child: Text(
-                    "Save",
-                    style: TextStyle(color: Colors.white),
+                  SizedBox(
+                    height: 20,
                   ),
-                ),
-              )
-            ],
+                  Row(
+                    children: [
+                      SizedBox(
+                        height: 40,
+                        width: 150,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            EventController().AddEventController(
+                                fromDate,
+                                toDate,
+                                _descriptioncontroller.text,
+                                _titleController.text);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(12), // <-- Radius
+                            ),
+                            backgroundColor: pinkColor,
+                          ),
+                          child: Text(
+                            "Save",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 50,
+                      ),
+                      SizedBox(
+                        height: 40,
+                        width: 150,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(12), // <-- Radius
+                            ),
+                            backgroundColor: Colors.white,
+                            side: BorderSide(
+                              width: 2,
+                              color: pinkColor,
+                            ),
+                          ),
+                          child: Text(
+                            "Close",
+                            style: TextStyle(color: pinkColor),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

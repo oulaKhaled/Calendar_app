@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_application_1/pages/root.dart';
+import 'package:flutter_application_1/pages/setProfile.dart';
 
 import 'package:flutter_application_1/pages/signup.dart';
 import 'package:flutter_application_1/services/authentication.dart';
@@ -139,69 +140,77 @@ class _LoginState extends State<Login> {
                     fontWeight: FontWeight.w700),
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                    height: 80,
-                    width: 80,
-                    child: ElevatedButton(
-                      child: Container(
-                        child: Image.asset(
+            // SizedBox(
+            //   height: 20,
+            // ),
+
+            Container(
+                margin: EdgeInsets.only(left: 50),
+                height: 50,
+                width: 300,
+                child: ElevatedButton(
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "Sign In using Google",
+                          style: GoogleFonts.poppins(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                        ),
+                        Image.asset(
                           "assets/google_logo2.png",
                           fit: BoxFit.cover,
                         ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          // <-- Radius
-                        ),
-                        side: BorderSide(
-                          width: 2,
-                          color: pinkColor,
-                        ),
-                      ),
-                      onPressed: () async {
-                        Future<bool?> response = _auth.LoginWithGoogle();
-                        if (response == true) {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (context) => Root()));
-                        }
-                      },
-                    )),
-                SizedBox(
-                  width: 20,
-                ),
-                SizedBox(
-                  height: 80,
-                  width: 80,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12), // <-- Radius
-                        ),
-                        side: BorderSide(
-                          width: 2,
-                          color: pinkColor,
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: Container(
-                        child: Image.asset(
-                          "assets/facebook_logo2.png",
-                          width: 70,
-                          height: 70,
-                        ),
-                      )),
-                ),
-              ],
+                      ],
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      // <-- Radius
+                    ),
+                    // side: BorderSide(
+                    //   width: 2,
+                    //   color: pinkColor,
+                    // ),
+                  ),
+                  onPressed: () async {
+                    Future<bool?> response = _auth.LoginWithGoogle();
+                    if (await response == true) {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => Setprofile()));
+                    }
+                  },
+                )),
+            SizedBox(
+              width: 20,
             ),
+            // SizedBox(
+            //   height: 80,
+            //   width: 80,
+            //   child: ElevatedButton(
+            //       style: ElevatedButton.styleFrom(
+            //         backgroundColor: Colors.white,
+            //         shape: RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.circular(12), // <-- Radius
+            //         ),
+            //         side: BorderSide(
+            //           width: 2,
+            //           color: pinkColor,
+            //         ),
+            //       ),
+            //       onPressed: () {},
+            //       child: Container(
+            //         child: Image.asset(
+            //           "assets/facebook_logo2.png",
+            //           width: 70,
+            //           height: 70,
+            //         ),
+            //       )),
+            // ),
+
             // SizedBox(
             //   height: 30,
             // ),

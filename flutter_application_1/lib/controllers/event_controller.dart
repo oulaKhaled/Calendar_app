@@ -30,8 +30,9 @@ class EventController {
       for (DocumentSnapshot doc in e.docs) {
         Map<String, dynamic> map = doc.data() as Map<String, dynamic>;
         print("MAAAAPPPPPP : ${map}");
+
         Event newevent = Event.fromMap(map, map["Id"]);
-        print("NEWWWW EVENNNTT : ${newevent}");
+        print("NEWWW EVVENNTNNNNTT : ${newevent}");
         events.add(newevent);
       }
     });

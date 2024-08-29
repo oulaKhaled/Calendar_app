@@ -5,7 +5,7 @@ import 'package:flutter_application_1/path/api_path.dart';
 import 'package:flutter_application_1/services/authentication.dart';
 
 class Database {
-  final _currentuser = Auth().getCurrentUserEmail();
+  final _currentuser = Auth().getCurrentUserEmail() as String;
   Future addEvent(Map<String, dynamic> map) async {
     return await FirebaseFirestore.instance
         .collection(ApiPath.Event())
@@ -16,6 +16,7 @@ class Database {
   Future<Stream<QuerySnapshot>> GetEvents(String userEmail) async {
     return await FirebaseFirestore.instance
         .collection(ApiPath.Event())
+        .where("user", isEqualTo: userEmail)
         .snapshots();
   }
 }
