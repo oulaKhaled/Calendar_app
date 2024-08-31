@@ -47,9 +47,6 @@ class _CalendarState extends State<Calendar> {
         margin: EdgeInsets.all(10),
         child: Column(children: [
           Container(
-              // height: double.infinity,
-              // width: double.infinity,
-
               child: Column(children: [
             SizedBox(
               height: 30,
@@ -120,81 +117,81 @@ class _CalendarState extends State<Calendar> {
   }
 }
 
-class TimeSlotScreen extends StatelessWidget {
-  // Generate a list of time slots from 8 AM to 11 PM
-  List<String> _generateTimeSlots() {
-    List<String> timeSlots = [];
-    TimeOfDay startTime = TimeOfDay(hour: 8, minute: 0);
-    TimeOfDay endTime = TimeOfDay(hour: 23, minute: 0);
+// class TimeSlotScreen extends StatelessWidget {
+//   // Generate a list of time slots from 8 AM to 11 PM
+//   List<String> _generateTimeSlots() {
+//     List<String> timeSlots = [];
+//     TimeOfDay startTime = TimeOfDay(hour: 8, minute: 0);
+//     TimeOfDay endTime = TimeOfDay(hour: 23, minute: 0);
 
-    while (startTime.hour < endTime.hour) {
-      String formattedTime = _formatTimeOfDay(startTime);
-      timeSlots.add(formattedTime);
+//     while (startTime.hour < endTime.hour) {
+//       String formattedTime = _formatTimeOfDay(startTime);
+//       timeSlots.add(formattedTime);
 
-      // Increment by 1 hour
-      startTime = startTime.replacing(hour: startTime.hour + 1);
-    }
+//       // Increment by 1 hour
+//       startTime = startTime.replacing(hour: startTime.hour + 1);
+//     }
 
-    return timeSlots;
-  }
+//     return timeSlots;
+//   }
 
-  // Format TimeOfDay to a readable string
-  String _formatTimeOfDay(TimeOfDay time) {
-    final hours = time.hourOfPeriod == 0 ? 12 : time.hourOfPeriod;
-    final period = time.period == DayPeriod.am ? 'AM' : 'PM';
-    return '${hours.toString().padLeft(2, '0')}:00 $period';
-  }
+//   // Format TimeOfDay to a readable string
+//   String _formatTimeOfDay(TimeOfDay time) {
+//     final hours = time.hourOfPeriod == 0 ? 12 : time.hourOfPeriod;
+//     final period = time.period == DayPeriod.am ? 'AM' : 'PM';
+//     return '${hours.toString().padLeft(2, '0')}:00 $period';
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    final timeSlots = _generateTimeSlots();
+//   @override
+//   Widget build(BuildContext context) {
+//     final timeSlots = _generateTimeSlots();
 
-    return Scaffold(
-      body: Center(
-        child: Container(
-          height: 400,
-          width: double.infinity,
-          child: ListView.builder(
-            itemCount: timeSlots.length,
-            itemBuilder: (context, index) {
-              return Container(
-                margin: EdgeInsets.only(left: 7),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 60,
-                    ),
-                    Row(children: [
-                      Text(
-                        timeSlots[index],
-                        style: GoogleFonts.poppins(
-                            fontSize: 16, color: Colors.blueGrey[300]),
-                      ),
+//     return Scaffold(
+//       body: Center(
+//         child: Container(
+//           height: 400,
+//           width: double.infinity,
+//           child: ListView.builder(
+//             itemCount: timeSlots.length,
+//             itemBuilder: (context, index) {
+//               return Container(
+//                 margin: EdgeInsets.only(left: 7),
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: [
+//                     SizedBox(
+//                       height: 60,
+//                     ),
+//                     Row(children: [
+//                       Text(
+//                         timeSlots[index],
+//                         style: GoogleFonts.poppins(
+//                             fontSize: 16, color: Colors.blueGrey[300]),
+//                       ),
 
-                      Container(
-                        height: 2.0,
-                        width: 200, // Set the height of the line
-                        color:
-                            Colors.blueGrey[300], // Set the color of the line
-                        margin: EdgeInsets.symmetric(
-                            horizontal: 60.0), // Optional padding
-                      )
-                      // Optional padding
-                    ]),
-                    SizedBox(
-                      height: 70,
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
-}
+//                       Container(
+//                         height: 2.0,
+//                         width: 200, // Set the height of the line
+//                         color:
+//                             Colors.blueGrey[300], // Set the color of the line
+//                         margin: EdgeInsets.symmetric(
+//                             horizontal: 60.0), // Optional padding
+//                       )
+//                       // Optional padding
+//                     ]),
+//                     SizedBox(
+//                       height: 70,
+//                     ),
+//                   ],
+//                 ),
+//               );
+//             },
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class TaskWidget extends StatefulWidget {
   const TaskWidget({super.key});

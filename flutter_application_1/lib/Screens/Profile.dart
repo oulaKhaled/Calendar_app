@@ -14,7 +14,8 @@ class Profile extends StatefulWidget {
 
 Future _getUserInfo() async {
   final data = await Auth().getCurrentUserInfo();
-  print("THİS İS UUUUSERRR IFNFFOOORMMATİOON : ${data["name"]}");
+  // print("THİS İS UUUUSERRR IFNFFOOORMMATİOON : ${data["name"]}");
+
   return data;
 }
 
